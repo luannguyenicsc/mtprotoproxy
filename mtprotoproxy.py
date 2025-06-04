@@ -864,13 +864,13 @@ class MTProtoSecureIntermediateFrameStreamWriter(LayeredStreamWriterBase):
 class ProxyReqStreamReader(LayeredStreamReaderBase):
     __slots__ = ()
 
-    async def read(self, msg):
+    async def read(self, n):
         RPC_PROXY_ANS = b"\x0d\xda\x03\x44"
         RPC_CLOSE_EXT = b"\xa2\x34\xb6\x5e"
         RPC_SIMPLE_ACK = b"\x9b\x40\xac\x3b"
         RPC_UNKNOWN = b'\xdf\xa2\x30\x57'
 
-        data = await self.upstream.read(1)
+        data = await self.upstream.read(n)
 
         if len(data) < 4:
             return b""
